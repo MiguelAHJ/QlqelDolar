@@ -1,7 +1,7 @@
 name: tasa_ve
 description: "Tasas de cambio Bs/USD (BCV, Euro, Binance, Promedio) con calculadora."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.6.0

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Necesario en release: el build de debug lo añade solo, el de release no. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Qlq el Dólar"
         android:name="${applicationName}"
