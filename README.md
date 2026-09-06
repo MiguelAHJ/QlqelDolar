@@ -35,7 +35,7 @@ assets/branding/                → kit de marca (íconos, wordmark, banner) en 
 .github/workflows/release.yml   → construye el APK y lo sube a Releases al crear un tag
 ```
 
-Estado con **Riverpod**. Backend configurable con `--dart-define=API_BASE_URL=...`.
+Estado con **Riverpod**. El backend por defecto es `https://qlqeldolar-backend.onrender.com/api` (Render, plan free: la primera consulta tras un rato inactivo tarda 30-60 s). Se puede cambiar con `--dart-define=API_BASE_URL=...`.
 
 ## 🛠️ Desarrollo
 
@@ -56,9 +56,9 @@ flutter run --dart-define=API_BASE_URL=http://192.168.1.XX:3000/api
    git tag v1.1.0
    git push && git push --tags
    ```
-3. GitHub Actions compila el APK con la variable de repositorio `API_BASE_URL` y lo publica en Releases.
+3. GitHub Actions compila el APK y lo publica en Releases.
 
-> Configura `API_BASE_URL` una sola vez en *Settings → Secrets and variables → Actions → Variables* con la URL pública del backend (ej. `https://qlq-el-dolar-api.onrender.com/api`).
+> Opcional: si el backend cambia de URL, define la variable de repositorio `API_BASE_URL` en *Settings → Secrets and variables → Actions → Variables*; si no existe, se usa la de Render.
 
 ## 🎨 Marca
 

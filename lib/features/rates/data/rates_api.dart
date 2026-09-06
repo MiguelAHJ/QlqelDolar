@@ -9,8 +9,10 @@ class RatesApi {
       : _dio = dio ??
             Dio(BaseOptions(
               baseUrl: AppConfig.apiBaseUrl,
-              connectTimeout: const Duration(seconds: 10),
-              receiveTimeout: const Duration(seconds: 10),
+              // Render (plan free) duerme el servicio y tarda 30-60 s en despertar:
+              // damos margen para que la primera petición no falle por timeout.
+              connectTimeout: const Duration(seconds: 30),
+              receiveTimeout: const Duration(seconds: 75),
             ));
 
   final Dio _dio;

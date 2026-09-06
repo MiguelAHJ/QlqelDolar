@@ -32,10 +32,9 @@ jobs:
           # Configúrala en Settings → Secrets and variables → Actions → Variables
           API_BASE_URL: ${{ vars.API_BASE_URL }}
         run: |
-          if [ -z "$API_BASE_URL" ]; then
-            echo "::error::Falta la variable de repositorio API_BASE_URL (URL pública del backend)."
-            exit 1
-          fi
+          # Si no hay variable, se usa la URL por defecto de AppConfig (backend en Render).
+          API_BASE_URL="${API_BASE_URL:-https://qlqeldolar-backend.onrender.com/api}"
+          echo "Backend: $API_BASE_URL"
           flutter build apk --release --dart-define=API_BASE_URL="$API_BASE_URL"
           VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//')
           mv build/app/outputs/flutter-apk/app-release.apk "QlqElDolar-v${VERSION}.apk"
