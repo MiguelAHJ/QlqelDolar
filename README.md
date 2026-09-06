@@ -12,7 +12,20 @@ Los datos vienen de un backend propio en NestJS que hace scraping del BCV y cons
 
 ## 📥 Descargar
 
-La última versión para Android está en **[Releases](../../releases/latest)** → archivo `QlqElDolar-vX.Y.Z.apk`.
+<p align="center">
+  <a href="https://github.com/MiguelAHJ/QlqelDolar/releases/latest/download/QlqElDolar-latest.apk">
+    <img src="https://img.shields.io/badge/Descargar%20APK-%C3%BAltima%20versi%C3%B3n-14B8A6?style=for-the-badge&logo=android&logoColor=white" alt="Descargar APK">
+  </a>
+  &nbsp;
+  <a href="https://github.com/MiguelAHJ/QlqelDolar/releases/latest">
+    <img src="https://img.shields.io/github/v/release/MiguelAHJ/QlqelDolar?style=for-the-badge&label=versi%C3%B3n&color=0B1220" alt="Última versión">
+  </a>
+  <a href="https://github.com/MiguelAHJ/QlqelDolar/releases">
+    <img src="https://img.shields.io/github/downloads/MiguelAHJ/QlqelDolar/total?style=for-the-badge&label=descargas&color=2563EB" alt="Descargas">
+  </a>
+</p>
+
+El botón descarga directamente el APK de la **última release** (`QlqElDolar-latest.apk`). Todas las versiones están en [Releases](../../releases).
 
 Instalación: descarga el APK en el teléfono, ábrelo y acepta "instalar de fuentes desconocidas" si Android lo pide.
 

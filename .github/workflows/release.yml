@@ -38,13 +38,17 @@ jobs:
           flutter build apk --release --dart-define=API_BASE_URL="$API_BASE_URL"
           VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//')
           mv build/app/outputs/flutter-apk/app-release.apk "QlqElDolar-v${VERSION}.apk"
+          # Copia con nombre fijo para que el enlace "latest" del README siempre funcione.
+          cp "QlqElDolar-v${VERSION}.apk" QlqElDolar-latest.apk
           echo "APK=QlqElDolar-v${VERSION}.apk" >> "$GITHUB_ENV"
 
       - name: Publicar release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.APK }}
+          files: |
+            ${{ env.APK }}
+            QlqElDolar-latest.apk
           generate_release_notes: true
 
       - name: Guardar APK como artifact (ejecución manual)
