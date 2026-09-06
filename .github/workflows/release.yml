@@ -1,0 +1,56 @@
+name: Release APK
+
+# Se dispara al crear un tag tipo v1.0.0 (o manualmente desde la pestaña Actions).
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Build APK (release)
+        env:
+          # Configúrala en Settings → Secrets and variables → Actions → Variables
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          if [ -z "$API_BASE_URL" ]; then
+            echo "::error::Falta la variable de repositorio API_BASE_URL (URL pública del backend)."
+            exit 1
+          fi
+          flutter build apk --release --dart-define=API_BASE_URL="$API_BASE_URL"
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//')
+          mv build/app/outputs/flutter-apk/app-release.apk "QlqElDolar-v${VERSION}.apk"
+          echo "APK=QlqElDolar-v${VERSION}.apk" >> "$GITHUB_ENV"
+
+      - name: Publicar release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.APK }}
+          generate_release_notes: true
+
+      - name: Guardar APK como artifact (ejecución manual)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.APK }}
+          path: ${{ env.APK }}
