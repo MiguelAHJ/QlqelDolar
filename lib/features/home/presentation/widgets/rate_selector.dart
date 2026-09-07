@@ -18,11 +18,11 @@ class RateSelector extends ConsumerWidget {
     final index = sources.indexOf(selected);
 
     return Container(
-      height: 52,
-      padding: const EdgeInsets.all(4),
+      height: 68,
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -39,7 +39,7 @@ class RateSelector extends ConsumerWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
                         color: theme.colorScheme.primary.withValues(alpha: 0.35),
@@ -87,21 +87,28 @@ class _SegmentButton extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Center(
-        child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 250),
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: color,
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-              ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(source.icon, size: 16, color: color),
-              const SizedBox(width: 5),
-              Text(source.shortLabel),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedScale(
+              scale: selected ? 1.1 : 1.0,
+              duration: const Duration(milliseconds: 250),
+              child: Icon(source.icon, size: 18, color: color),
+            ),
+            const SizedBox(height: 4),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 250),
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: color,
+                    fontSize: 12,
+                    letterSpacing: 0.1,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  ),
+              child: Text(source.shortLabel, maxLines: 1, overflow: TextOverflow.ellipsis),
+            ),
+          ],
         ),
       ),
     );

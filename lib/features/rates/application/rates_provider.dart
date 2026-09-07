@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/config/app_config.dart';
@@ -16,12 +17,19 @@ final ratesRepositoryProvider = Provider<RatesRepository>(
 /// se auto-refresca cada [AppConfig.refreshInterval].
 class RatesNotifier extends AsyncNotifier<RatesSnapshot> {
   Timer? _timer;
+  AppLifecycleListener? _lifecycle;
 
   @override
   Future<RatesSnapshot> build() async {
     _timer?.cancel();
     _timer = Timer.periodic(AppConfig.refreshInterval, (_) => refresh());
-    ref.onDispose(() => _timer?.cancel());
+    // Al volver a la app (desde segundo plano) pide tasas frescas de inmediato.
+    _lifecycle?.dispose();
+    _lifecycle = AppLifecycleListener(onResume: () => refresh());
+    ref.onDispose(() {
+      _timer?.cancel();
+      _lifecycle?.dispose();
+    });
 
     final repo = ref.read(ratesRepositoryProvider);
     final cached = repo.readCache();

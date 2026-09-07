@@ -127,19 +127,36 @@ class _Footer extends StatelessWidget {
         .bodySmall
         ?.copyWith(color: Colors.white.withValues(alpha: 0.7));
     final sourceDate = r.sourceDate;
-    return Row(
+    final iconColor = Colors.white.withValues(alpha: 0.7);
+    final updated = r.fetchedAt.toLocal();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.schedule_rounded, size: 14, color: Colors.white.withValues(alpha: 0.7)),
-        const SizedBox(width: 6),
-        Expanded(
-          child: Text(
-            sourceDate != null
-                ? 'Fecha valor: ${Formatters.shortDate(sourceDate)} · actualizado ${Formatters.timeAgo(r.fetchedAt)}'
-                : 'Actualizado ${Formatters.timeAgo(r.fetchedAt)}',
-            style: style,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Row(
+          children: [
+            Icon(Icons.schedule_rounded, size: 14, color: iconColor),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                'Actualizado ${Formatters.timeAgo(r.fetchedAt)} · ${Formatters.clock(updated)}',
+                style: style,
+                maxLines: 2,
+              ),
+            ),
+          ],
         ),
+        if (sourceDate != null) ...[
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Icon(Icons.event_rounded, size: 14, color: iconColor),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text('Fecha valor: ${Formatters.shortDate(sourceDate)}', style: style, maxLines: 2),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }

@@ -66,6 +66,9 @@ class Formatters {
     return DateFormat('d MMM, HH:mm', 'es').format(date.toLocal());
   }
 
+  /// Hora local corta: 18:05
+  static String clock(DateTime date) => DateFormat('HH:mm', 'es').format(date.toLocal());
+
   static String shortDate(DateTime date) =>
       DateFormat('EEEE d MMM', 'es').format(date.toLocal());
 }
